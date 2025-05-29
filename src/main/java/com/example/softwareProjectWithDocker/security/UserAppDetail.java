@@ -1,16 +1,14 @@
 package com.example.softwareProjectWithDocker.security;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 
 
 public class UserAppDetail implements UserDetails {
 
-    private final UserApplication userApplication;
+   private final UserApplication userApplication;
 
-    public UserAppDetail(UserApplication userApplication) {
+    public UserAppDetail( UserApplication userApplication) {
         this.userApplication = userApplication;
     }
 

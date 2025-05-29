@@ -23,6 +23,7 @@ import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +62,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                             FilterChain chain, Authentication authentication) throws IOException {
 
+
         UserAppDetail appDetail = (UserAppDetail) authentication.getPrincipal();
 
         auth_logger.info("User {} logged in successfully", appDetail.getUsername());
@@ -87,14 +89,16 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         response.addHeader(jwtConfig.getRefreshHeader(), jwtConfig.getTokenPrefix() + refresh_token);
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().flush();
-
+//        response.getWriter().flush();
+//        response.getWriter().close();
 
         Map<String,Object> responses = new HashMap<>();
         responses.put("access token",access_token);
         responses.put("refresh token",refresh_token);
         responses.put("username",appDetail.getUsername());
         responses.put("count",responses.size());
+
+//        cache.put(appDetail.getUsername(), responses);
 
         new ObjectMapper().writeValue(response.getOutputStream(), responses);
     }

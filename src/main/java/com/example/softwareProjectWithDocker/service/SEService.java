@@ -9,9 +9,12 @@ public interface SEService {
 
     SoftwareEngineerRecord createSE(SoftwareEngineerRecord se);
 
+    SoftwareEngineerRecord updateSe(Long id, SoftwareEngineerRecord se);
+
     Page<SoftwareEngineerRecord> getAllSEswithPagiantions(int offset, int pageSize);
 
     Page<SoftwareEngineerRecord> getSEsWithPaginationAndSorting(int offset, int pageSize, String sortByField);
+
 
     SoftwareEngineerRecord findSeById(Long id);
 }

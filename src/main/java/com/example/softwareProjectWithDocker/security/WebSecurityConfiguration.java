@@ -81,6 +81,7 @@ public class WebSecurityConfiguration {
                 // permissions based and role based
                 .authorizeHttpRequests(request ->
                         request.requestMatchers("/api/v1/se/all/**").permitAll()
+                                .requestMatchers("/api/v1/se/update/{id}").hasRole(ADMIN.name())
                                 .requestMatchers("/api/v1/login").permitAll()
                                 .requestMatchers("/api/v1/refresh-token").permitAll()
                                 .requestMatchers("/api/v1/se/with-pagination").hasAnyRole(ADMIN.name(), USER.name())

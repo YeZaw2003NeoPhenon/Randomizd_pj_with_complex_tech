@@ -44,6 +44,14 @@ public class SEController {
         return ResponseEntity.created(URI.create("/create")).body(ApiResponse.success(record, "SE is created flawlessly!"));
     }
 
+    @PutMapping(value = "/update/{id}")
+    @Operation(summary = "Update Software Engineer", description = "PUT method")
+    public ResponseEntity<ApiResponse<SoftwareEngineerRecord>> updateSE(@RequestBody SoftwareEngineerRecord se, @PathVariable("id") Long id){
+        SoftwareEngineerRecord record = service.updateSe(id,se);
+        se_log.info("SE is created: {}", record);
+        return ResponseEntity.created(URI.create("/update")).body(ApiResponse.success(record, "SE is updated flawlessly!"));
+    }
+
     @GetMapping(value = "/with-pagination")
     @Operation(summary = "Get Software Engineers With Paginations", description = "GET method")
     public ResponseEntity<ApiResponse<Page<SoftwareEngineerRecord>>> getSedatasWithPagination(@RequestParam("offset") int offset,
@@ -75,5 +83,7 @@ public class SEController {
         SoftwareEngineerRecord se = service.findSeById(id);
         return ResponseEntity.ok(ApiResponse.success(se, "Tracked Engineer"));
     }
+
+
 
 }

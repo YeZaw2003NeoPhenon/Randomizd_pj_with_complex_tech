@@ -42,6 +42,15 @@ public class SoftwareEngineer {
         this.gender = gender;
     }
 
+    public SoftwareEngineer(Long id , String first_name, String last_name, String tech_stack,Gender gender) {
+        this.id = id;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.tech_stack = tech_stack;
+        this.gender = gender;
+    }
+
+
     public Gender getGender() {
         return gender;
     }

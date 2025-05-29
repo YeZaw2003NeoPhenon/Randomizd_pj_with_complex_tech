@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.crypto.SecretKey;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -34,41 +34,48 @@ public class JwtController {
     @PostMapping("/refresh-token")
     public ResponseEntity<ApiResponse<Object>> generateRefreshToken(HttpServletResponse response, HttpServletRequest request){
 
-        String refreshHeader = request.getHeader(jwtConfig.getRefreshHeader());
+        String tokenHeader = request.getHeader(jwtConfig.getHeader());
 
-        if(refreshHeader == null || !refreshHeader.startsWith(jwtConfig.getTokenPrefix())){
+        if(tokenHeader == null || !tokenHeader.startsWith(jwtConfig.getTokenPrefix())){
             return ResponseEntity.badRequest().body(ApiResponse.error(null, "No refresh token provided"));
         }
 
-        String refresh_token = refreshHeader.replace(jwtConfig.getTokenPrefix(), "");
+        String token = tokenHeader.replace(jwtConfig.getTokenPrefix(), "");
 
-     Jws<Claims> claimsJws=   Jwts.parser()
+      Jws<Claims> claimsJws = Jwts.parser()
                                   .verifyWith(jwtSecretKey)
                                   .build()
-                                  .parseSignedClaims(refresh_token);
+                                  .parseSignedClaims(token);
 
      Claims claim = claimsJws.getPayload();
 
      String username = claim.getSubject();
 
-     String newAccessToken = Jwts.builder()
+     var authorities = (List<Map<String, String>>) claim.get("Authorities");
+
+        String access_token = Jwts.builder()
                 .subject(username)
-                .issuedAt(new Date())
+                .claim("Authorities",authorities)
+                .issuedAt(java.sql.Date.valueOf(LocalDate.now()))
+                .issuer(request.getRequestURI().toString())
                 .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
                 .signWith(jwtSecretKey)
                 .compact();
 
-        String newRefreshToken = Jwts.builder()
+        String refresh_token = Jwts.builder()
                 .subject(username)
-                .issuedAt(new Date())
+                .claim("Authorities",authorities)
+                .issuedAt(java.sql.Date.valueOf(LocalDate.now()))
+                .issuer(request.getRequestURI().toString())
                 .expiration(java.sql.Date.valueOf(LocalDate.now().plusDays(jwtConfig.getTokenExpiration())))
                 .signWith(jwtSecretKey)
                 .compact();
 
         Map<String,String> responses = new HashMap<>();
-        responses.put("access token",newAccessToken);
-        responses.put("refresh token",newRefreshToken);
+        responses.put("access token",access_token);
+        responses.put("refresh token",refresh_token);
 
         return ResponseEntity.ok(ApiResponse.success(responses, "List of tokens implemented"));
     }
+
 }

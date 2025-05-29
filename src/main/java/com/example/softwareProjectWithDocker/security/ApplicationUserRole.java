@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import static com.example.softwareProjectWithDocker.security.ApplicationUserPermission.SOURCE_READ;
 import static com.example.softwareProjectWithDocker.security.ApplicationUserPermission.SOURCE_WRITE;
 
-public enum ApplicationUserRole {
+ public enum ApplicationUserRole {
 
    ADMIN(Sets.newHashSet(SOURCE_READ,SOURCE_WRITE)),
    USER(Sets.newHashSet(SOURCE_READ));

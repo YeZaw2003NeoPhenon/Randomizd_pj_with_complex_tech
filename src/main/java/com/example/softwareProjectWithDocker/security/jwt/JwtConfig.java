@@ -37,7 +37,6 @@ public class JwtConfig {
         return tokenExpiration;
     }
 
-
     public String getHeader(){
         return HttpHeaders.AUTHORIZATION;
     }
