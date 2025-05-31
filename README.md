@@ -36,21 +36,55 @@ A sophisticated Java backend project that showcases a secure, containerized, and
 ## Application Configuration
 > [!NOTE]
 > ```
->spring.datasource.url=jdbc:mysql://localhost:3306/quiz_db
->spring.datasource.username=root
->spring.datasource.password=yourpassword
->spring.jpa.hibernate.ddl-auto=update
->spring.jpa.show-sql=true
+> spring.application.name=softwareProjectWithDocker
+> spring.datasource.url=jdbc:postgresql://localhost:5332/softwareProjet
+> spring.datasource.username=postgres
+> spring.datasource.password=neophenon!@#
+> spring.datasource.driver-class-name=org.postgresql.Driver
+> 
+> //hibernate configurations
+> spring.jpa.hibernate.ddl-auto=update
+> spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+> spring.jpa.properties.hibernate.format_sql=true
+> spring.jpa.show-sql=true
+> // redis configuration
+> spring.cache.type=redis
+> spring.jpa.show-sql=true
+> spring.redis.host=localhost
+> spring.redis.port=6379
+
+> // tranditional hibernate configurations
+> spring.jpa.hibernate.ddl-auto=update
+> spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+> spring.jpa.properties.hibernate.format_sql=true
+> spring.jpa.properties.hibernate.format_sql=true
+> spring.jpa.show-sql=true
+> spring.cache.type=redis
+> spring.redis.host=localhost
+> spring.redis.port=6379
+> spring.redis.password=neo'sreliablerediscache
+>
+> // jwt prefix configuration properties
+> application.jwt.tokenPrefix=Bearer
+> application.jwt.tokenExpiration=7
+> application.jwt.secretKey=hurryingmeanderinglyintoloveiswhatambeciliticpeopledowisemangetawayfromunprofitibleillusions
+> application.jwt.accessHeader=Access-Token
+> application.jwt.refreshHeader=Refresh-Token
 > ```
 
 **For Testing-- Configure src/test/resources/application.properties** 
-
 > [!NOTE]
 > ```
 > spring.datasource.url=jdbc:h2:mem:testdb
 > spring.datasource.driver-class-name=org.h2.Driver
+> spring.datasource.username=sa
+> spring.datasource.password=sa
 > spring.jpa.hibernate.ddl-auto=create-drop
->  ```
+> spring.jpa.show-sql=true
+> spring.jpa.properties.hibernate.format_sql=true
+> spring.h2.console.path=/h2-console
+> spring.h2.console.enabled=true
+> ```
 
 ## 📦 Setup & Installation
 ### ✅ Prerequisites
