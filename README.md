@@ -52,7 +52,7 @@ A sophisticated Java backend project that showcases a secure, containerized, and
 > spring.jpa.show-sql=true
 > spring.redis.host=localhost
 > spring.redis.port=6379
-
+> 
 > // tranditional hibernate configurations
 > spring.jpa.hibernate.ddl-auto=update
 > spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
@@ -63,7 +63,6 @@ A sophisticated Java backend project that showcases a secure, containerized, and
 > spring.redis.host=localhost
 > spring.redis.port=6379
 > spring.redis.password=neo'sreliablerediscache
->
 > // jwt prefix configuration properties
 > application.jwt.tokenPrefix=Bearer
 > application.jwt.tokenExpiration=7
