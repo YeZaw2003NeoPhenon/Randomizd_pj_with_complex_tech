@@ -52,6 +52,7 @@ A sophisticated Java backend project that showcases a secure, containerized, and
 > spring.jpa.hibernate.ddl-auto=create-drop
 >  ```
 
+## 📦 Setup & Installation
 ### ✅ Prerequisites
 
 - [Docker](https://www.docker.com/)
@@ -62,6 +63,7 @@ A sophisticated Java backend project that showcases a secure, containerized, and
 git clone https://github.com/YeZaw2003NeoPhenon/Randomizd_pj_with_complex_tech.git
 cd Randomizd_pj_with_complex_tech
 docker-compose up --build
+
 ### Contributing
 
 ## Fork the Repository:
@@ -82,7 +84,4 @@ Implement your feature or bug fix.
 
 ## Create a Pull Request:
 Open a pull request on GitHub and describe your changes.
-
-
-## 📦 Setup & Installation
 
