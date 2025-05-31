@@ -12,12 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,6 +57,7 @@ public class SEServiceImp implements SEService{
             "softwareEngineerWithPaginationAndSorting",
             "softwareEngineerById"}, key = "#se.id", allEntries = true)
     public SoftwareEngineerRecord createSE(SoftwareEngineerRecord se) {
+
 //       String key =  all_se_cache_keys + se.id();
 //
 //        SoftwareEngineerRecord cached = (SoftwareEngineerRecord) redisTemplate.opsForValue().get(key);
@@ -73,7 +72,7 @@ public class SEServiceImp implements SEService{
 
         SoftwareEngineer responsed_data = seRepo.save(target);
 
-//        redisTemplate.opsForValue().set(key,responsed_data, Duration.ofMinutes(60));
+//        redisTemplate.opsForValue().set(key, responsed_data, Duration.ofMinutes(60));
 
         return se;
     }
@@ -129,6 +128,13 @@ public class SEServiceImp implements SEService{
                 .orElseThrow(() -> new EngineerNotFoundException("Enginner not trackable!"));
     }
 
+        @Override
+        @Cacheable(value = "softwareEngineerByMultipleAttributes", key = "#firstName + #lastName + #techStack")
+        public List<SoftwareEngineerRecord> getSesByMultipleEntities(String firstName, String lastName, String techStack) {
+            return seRepo.findByMultipleAttributes(firstName,lastName,techStack).stream()
+                    .map(se -> new SoftwareEngineerRecord(se.getId(), se.getFirst_name(),se.getLast_name(), se.getTech_stack(),se.getGender()))
+                    .collect(Collectors.toList());
+        }
 
     public void setDataChanges(SoftwareEngineerRecord se, SoftwareEngineer target) {
         target.setFirst_name(se.first_name());

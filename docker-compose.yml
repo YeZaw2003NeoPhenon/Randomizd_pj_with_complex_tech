@@ -36,7 +36,6 @@ services:
       - "6379:6379"
     networks:
       - db
-
     restart: unless-stopped
 
   app:

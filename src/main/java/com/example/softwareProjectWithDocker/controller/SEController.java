@@ -36,6 +36,15 @@ public class SEController {
        return ResponseEntity.ok(ApiResponse.success(sedatas, "List of software engineers"));
     }
 
+    @GetMapping(value = "/get-all-by-multiple-entities")
+    @Operation(summary = "Get All Software Engineers By Related Entities", description = "GET method")
+    public ResponseEntity<ApiResponse<List<SoftwareEngineerRecord>>> getSEsByEntities(@RequestParam(name = "firstName") String firstName,
+                                                                                      @RequestParam(name = "lastName")String lastName,
+                                                                                      @RequestParam(name = "techStack")String techStack){
+        List<SoftwareEngineerRecord> sedatas = service.getSesByMultipleEntities(firstName,lastName,techStack);
+        return ResponseEntity.ok(ApiResponse.success(sedatas, "List of software engineers"));
+    }
+
     @PostMapping(value = "/create")
     @Operation(summary = "Create Software Engineer", description = "POST method")
     public ResponseEntity<ApiResponse<SoftwareEngineerRecord>> createSE(@RequestBody SoftwareEngineerRecord se){

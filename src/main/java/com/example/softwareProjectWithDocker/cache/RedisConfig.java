@@ -22,7 +22,7 @@ import java.util.Map;
 @Configuration
 public class RedisConfig {
 
-//
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration("localhost", 6379);
@@ -35,6 +35,7 @@ public class RedisConfig {
      * Configures the cache manager for Redis caching. Defines global and specific cache behavior,
      * including time-to-live for caching and serialization rules.
      */
+
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
 
@@ -52,7 +53,8 @@ public class RedisConfig {
         return RedisCacheManager
                 .builder(redisConnectionFactory)
                 .withInitialCacheConfigurations(cacheConfig)
-                .cacheDefaults(redisConfig).build();
+                .cacheDefaults(redisConfig)
+                .build();
     }
 
 //    /**

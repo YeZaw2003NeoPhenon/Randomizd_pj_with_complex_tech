@@ -15,6 +15,7 @@ public interface SEService {
 
     Page<SoftwareEngineerRecord> getSEsWithPaginationAndSorting(int offset, int pageSize, String sortByField);
 
-
     SoftwareEngineerRecord findSeById(Long id);
+
+    List<SoftwareEngineerRecord>getSesByMultipleEntities(String firstName, String lastName, String techStack);
 }

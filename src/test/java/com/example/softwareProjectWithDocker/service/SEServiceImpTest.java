@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +43,7 @@ class SEServiceImpTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         engineer = new SoftwareEngineer(1L, "John", "Doe", "Java", Gender.MALE);
+        // pushing John Doe in In-Memory db for testing
         when(seRepo.save(any(SoftwareEngineer.class))).thenReturn(engineer);
     }
 
@@ -53,6 +55,7 @@ class SEServiceImpTest {
 
         assertThat(result.get(0).first_name()).isEqualTo("John");
         assertThat(result.get(0).last_name()).isEqualTo("Doe");
+        assertThat(result.get(0).gender()).isEqualTo(Gender.MALE);
 
         assertThat(result.size()).isEqualTo(1);
 
@@ -72,9 +75,10 @@ class SEServiceImpTest {
 
     @Test
     void testUpdateSE() {
+
         when(seRepo.findAll()).thenReturn(Collections.singletonList(engineer));
 
-        SoftwareEngineerRecord updatedRecord = new SoftwareEngineerRecord(1L, "Jane", "Doe", "Python", Gender.FEMALE);
+        SoftwareEngineerRecord updatedRecord = new SoftwareEngineerRecord(1L, "Neo", "Courney", "Python", Gender.MALE);
 
         SoftwareEngineerRecord result = seServiceImp.updateSe(1L, updatedRecord);
 
@@ -85,10 +89,12 @@ class SEServiceImpTest {
 
     @Test
     void testUpdateSe_NotFound() {
-        when(seRepo.findAll()).thenReturn(Collections.emptyList());
+
+        when(seRepo.findAll()).thenReturn(Collections.emptyList()); // no data fetched out
+
         assertThatThrownBy(() -> seServiceImp.updateSe(1L, new SoftwareEngineerRecord(1L, "John", "Doe", "Java", Gender.MALE)))
                 .isInstanceOf(EngineerNotFoundException.class)
-                .hasMessage("Engineer with id 1 not found");
+                .hasMessage("Enginner not trackable!");
     }
 
     @Test

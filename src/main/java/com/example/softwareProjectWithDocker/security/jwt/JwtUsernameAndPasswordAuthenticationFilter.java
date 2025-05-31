@@ -68,8 +68,8 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         auth_logger.info("User {} logged in successfully", appDetail.getUsername());
 
         String access_token = Jwts.builder()
-                                .subject(appDetail.getUsername())
-                                .claim("Authorities",appDetail.getAuthorities())
+                                .subject(appDetail.getUsername()) // header
+                                .claim("Authorities",appDetail.getAuthorities()) // payload auth -> List<Map<String,String>>
                                 .issuedAt(java.sql.Date.valueOf(LocalDate.now()))
                                 .issuer(request.getRequestURI().toString())
                                 .expiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
@@ -85,10 +85,14 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
                                        .signWith(jwtSecretKey)
                                        .compact();
 
-        response.addHeader(jwtConfig.getAccessHeader(), jwtConfig.getTokenPrefix() + access_token);
-        response.addHeader(jwtConfig.getRefreshHeader(), jwtConfig.getTokenPrefix() + refresh_token);
+//        response.addHeader(jwtConfig.getAccessHeader(), jwtConfig.getTokenPrefix() + access_token);
+//        response.addHeader(jwtConfig.getRefreshHeader(), jwtConfig.getTokenPrefix() + refresh_token);
+        response.setHeader(jwtConfig.getHeader(), access_token);
+
         response.setContentType("application/json");
+
         response.setStatus(HttpServletResponse.SC_OK);
+
 //        response.getWriter().flush();
 //        response.getWriter().close();
 

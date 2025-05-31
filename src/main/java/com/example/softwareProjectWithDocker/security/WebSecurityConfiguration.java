@@ -87,6 +87,7 @@ public class WebSecurityConfiguration {
                                 .requestMatchers("/api/v1/se/with-pagination").hasAnyRole(ADMIN.name(), USER.name())
                                 .requestMatchers("/api/v1/se/create").hasRole(ADMIN.name())
                                 .requestMatchers("/api/v1/se/with-pagination-and-sorting").hasAuthority(SOURCE_READ.getPermission())
+                                .requestMatchers("/h2-console/**").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .logout(logout -> {
